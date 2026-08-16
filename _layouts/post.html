@@ -1,0 +1,20 @@
+---
+layout: default
+---
+<article class="post">
+  <header class="post-header">
+    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
+      {%- if page.tags and page.tags.size > 0 %} &middot; {{ page.tags | join: ", " }}{% endif -%}</p>
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+    {% if page.subtitle %}<p class="post-subtitle">{{ page.subtitle | escape }}</p>{% endif %}
+  </header>
+  <div class="post-body">
+    {{ content }}
+  </div>
+  <footer class="post-footer">
+    <nav class="post-nav">
+      {% if page.previous.url %}<a class="prev" href="{{ page.previous.url | relative_url }}">&larr; {{ page.previous.title | escape }}</a>{% endif %}
+      {% if page.next.url %}<a class="next" href="{{ page.next.url | relative_url }}">{{ page.next.title | escape }} &rarr;</a>{% endif %}
+    </nav>
+  </footer>
+</article>

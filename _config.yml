@@ -1,0 +1,40 @@
+# ---- Site settings -----------------------------------------------------------
+title: "Accesso"
+description: "Essays by Nadir."
+author: "Nadir"
+lang: en
+# url/baseurl are filled in by the setup; GitHub Pages also sets url automatically.
+url: "https://nadosaurusrex.github.io"
+baseurl: ""
+# Optional newsletter import source for tools/sync.py (empty = disabled):
+substack_url: ""
+
+# ---- Build settings (GitHub Pages' built-in Jekyll; no Actions workflow needed) ----
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+permalink: /p/:title/
+timezone: Europe/London
+future: true
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+feed:
+  posts_limit: 50
+defaults:
+  - scope: {path: "", type: posts}
+    values: {layout: post}
+  - scope: {path: ""}
+    values: {layout: default}
+exclude:
+  - tools/
+  - posts/
+  - drafts/
+  - README.md
+  - SETUP_LOG.md
+  - Publish.command
+  - Gemfile
+  - Gemfile.lock
+  - vendor/

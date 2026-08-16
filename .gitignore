@@ -1,0 +1,11 @@
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.DS_Store
+*.tmp
+.setup/
+SETUP_LOG.md
+# drafts never leave this Mac:
+drafts/*
+!drafts/.gitkeep
