@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nadosaurusrex.github.io/sitemap.xml

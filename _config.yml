@@ -1,6 +1,6 @@
 # ---- Site settings -----------------------------------------------------------
 title: "Access"
-description: "Essays by Nadir."
+description: "Talent is everywhere. What's rare is a way in."
 author: "Nadir"
 lang: en
 # url/baseurl are filled in by the setup; GitHub Pages also sets url automatically.
@@ -27,7 +27,7 @@ defaults:
   - scope: {path: "", type: posts}
     values: {layout: post}
   - scope: {path: ""}
-    values: {layout: default}
+    values: {layout: default, image: /assets/img/og/card.png}
 exclude:
   - tools/
   - posts/
@@ -38,3 +38,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor/
+
+# ---- Search engines (added 2026-08-19) ----
+webmaster_verifications:
+  google: vXF10ReIlY4i7WWEmc1wnZA4Mf8O-CELhpE5cZjtRxo

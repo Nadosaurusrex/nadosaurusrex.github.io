@@ -5,7 +5,8 @@ subtitle: "AI has my mother's patience. Somebody still has to hold the spoon."
 date: 2026-08-19 00:00:00 +0000
 slug: "the-spoon-not-the-machine"
 source_file: "posts/the-spoon-not-the-machine.md"
-source_sha: 2899d17e1d153651
+source_sha: 214e2e131f99a148
+description: "AI has my mother's patience. Somebody still has to hold the spoon."
 ---
 
 _"Intelligente ma non si applica."_ Intelligent, but doesn't apply himself. My teachers said it about me all through primary school, and I did the minimum to pass. Nobody said "dyslexia" until high school.

@@ -1,6 +1,7 @@
 ---
 title: The spoon, not the machine.
 subtitle: AI has my mother's patience. Somebody still has to hold the spoon.
+description: AI has my mother's patience. Somebody still has to hold the spoon.
 date: 2026-08-19
 slug: the-spoon-not-the-machine
 ---
