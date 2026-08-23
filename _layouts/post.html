@@ -1,20 +1,27 @@
 ---
 layout: default
 ---
+{%- assign p_lang = page.lang | default: site.lang | default: "en" -%}
 <article class="post">
   <header class="post-header">
-    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
+    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{% include date.html date=page.date lang=p_lang style="long" %}</time>
       {%- if page.tags and page.tags.size > 0 %} &middot; {{ page.tags | join: ", " }}{% endif -%}</p>
     <h1 class="post-title">{{ page.title | escape }}</h1>
     {% if page.subtitle %}<p class="post-subtitle">{{ page.subtitle | escape }}</p>{% endif %}
+    {% include lang.html part="origin" %}
   </header>
   <div class="post-body">
     {{ content }}
   </div>
   <footer class="post-footer">
+    {%- assign p_peers = site.posts | where: "lang", p_lang -%}
+    {%- assign p_i = -1 -%}
+    {%- for p in p_peers -%}{%- if p.url == page.url -%}{%- assign p_i = forloop.index0 -%}{%- endif -%}{%- endfor -%}
+    {%- assign p_newer = p_i | minus: 1 -%}
+    {%- assign p_older = p_i | plus: 1 %}
     <nav class="post-nav">
-      {% if page.previous.url %}<a class="prev" href="{{ page.previous.url | relative_url }}">&larr; {{ page.previous.title | escape }}</a>{% endif %}
-      {% if page.next.url %}<a class="next" href="{{ page.next.url | relative_url }}">{{ page.next.title | escape }} &rarr;</a>{% endif %}
+      {% if p_i >= 0 and p_older < p_peers.size %}{% assign p_prev = p_peers[p_older] %}<a class="prev" href="{{ p_prev.url | relative_url }}">&larr; {{ p_prev.title | escape }}</a>{% endif %}
+      {% if p_i > 0 %}{% assign p_next = p_peers[p_newer] %}<a class="next" href="{{ p_next.url | relative_url }}">{{ p_next.title | escape }} &rarr;</a>{% endif %}
     </nav>
   </footer>
 </article>
