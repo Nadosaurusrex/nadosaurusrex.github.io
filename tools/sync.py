@@ -9,10 +9,7 @@ Sources
      images into assets/img/<slug>/ and writes _posts/YYYY-MM-DD-<slug>.md.
   2. Local Markdown files dropped into posts/ (your "inbox" for new writing).
      A file needs nothing special: an optional '# Title' first line becomes the
-     title; front matter (--- ... ---) is honoured if present.  'lang: it' in the
-     front matter publishes the file as the Italian edition under /it/p/<slug>/;
-     two files with the same slug and different lang are one piece in two languages
-     (see posts/README.md).
+     title; front matter (--- ... ---) is honoured if present.
 
 Idempotent: posts already imported are skipped (Substack: by slug; local: by file
 name + content hash).  --force re-imports everything.  --push commits and pushes.
@@ -836,7 +833,6 @@ def import_local(force: bool) -> tuple:
     if not os.path.isdir(INBOX_DIR):
         return 0, 0
     have = existing_posts()
-    written = set()
     new = skipped = 0
     for name in sorted(os.listdir(INBOX_DIR)):
         if not name.lower().endswith((".md", ".markdown", ".txt")) or name.upper().startswith("README"):
@@ -877,15 +873,6 @@ def import_local(force: bool) -> tuple:
         else:
             date = _dt.datetime.now().astimezone() - _dt.timedelta(minutes=5)
         slug = str(fm_in.get("slug") or old.get("slug") or slugify(title))
-        # Language of this edition. The site default ('lang:' in _config.yml, "en") keeps the
-        # plain address /p/<slug>/; any other language is published under /<lang>/p/<slug>/
-        # and its generated file gets a .<lang> suffix, so two editions of one piece (same
-        # slug, same date) never collide. The layouts pair editions by slug (or by 'ref').
-        site_lang = (read_config_value("lang", "en") or "en").strip().lower()[:2] or "en"
-        lang = str(fm_in.get("lang") or site_lang).strip().lower()
-        if not re.match(r"^[a-z]{2}$", lang):
-            warn("%s: lang %r is not a two-letter code - using %s" % (rel, lang, site_lang))
-            lang = site_lang
         fm = ["layout: post", "title: %s" % yaml_str(title)]
         if fm_in.get("subtitle"):
             fm.append("subtitle: %s" % yaml_str(str(fm_in["subtitle"])))
@@ -893,27 +880,11 @@ def import_local(force: bool) -> tuple:
                "slug: %s" % yaml_str(slug),
                "source_file: %s" % yaml_str(rel),
                "source_sha: %s" % sha]
-        for k in ("tags", "image", "description", "ref", "written_in", "edition_note",
-                  "series", "series_order"):
+        for k in ("tags", "image", "description"):
             if fm_in.get(k):
                 v = str(fm_in[k])
                 fm.append("%s: %s" % (k, v if (k == "tags" and v.startswith("[")) else yaml_str(v)))
-        fm.append("lang: %s" % lang)
-        target = existing
-        if lang != site_lang:
-            fm.append("permalink: /%s/p/%s/" % (lang, slug))
-            if target is None:
-                target = os.path.join(POSTS_DIR, "%s-%s.%s.md" % (date.strftime("%Y-%m-%d"), slug, lang))
-        elif target is None:
-            target = os.path.join(POSTS_DIR, "%s-%s.md" % (date.strftime("%Y-%m-%d"), slug))
-        if target in written:
-            warn("%s: would overwrite %s, already written from another inbox file in this run - "
-                 "skipped. Two editions of one piece need the same slug and DIFFERENT lang (the "
-                 "Italian file wants 'lang: it'). Fix the front matter, delete that generated file "
-                 "(the one sanctioned hand-touch in _posts/) and run again." % (rel, os.path.relpath(target, ROOT)))
-            continue
-        out = write_post(date, slug, fm, liquid_safe(body), target)
-        written.add(out)
+        out = write_post(date, slug, fm, liquid_safe(body), existing)
         new += 1
         log("  + %s  <- %s" % (os.path.relpath(out, ROOT), rel))
     return new, skipped

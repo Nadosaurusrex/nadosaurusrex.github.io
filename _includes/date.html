@@ -1,6 +1,0 @@
-{%- comment -%} [include date.html date=post.date lang="it" style="short" ] → "24 ago 2026" / style="long" → "24 agosto 2026"; English: "24 Aug 2026" / "24 August 2026" (the formats the site used before). {%- endcomment -%}
-{%- assign d_lang = include.lang | default: "en" -%}
-{%- assign d_T = site.data.i18n[d_lang] -%}
-{%- assign d_m = include.date | date: "%-m" | minus: 1 -%}
-{%- if include.style == "short" -%}{%- assign d_month = d_T.months_short[d_m] -%}{%- else -%}{%- assign d_month = d_T.months_long[d_m] -%}{%- endif -%}
-{{- include.date | date: "%-d" }} {{ d_month }} {{ include.date | date: "%Y" -}}

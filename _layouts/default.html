@@ -5,22 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   {% seo %}
-  {% include lang.html part="head" %}
   <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}?v={{ site.time | date: '%s' }}">
   <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
   {% feed_meta %}
 </head>
 <body>
-  {%- assign nav_lang = page.lang | default: site.lang | default: 'en' -%}
-  {%- assign nav = site.data.i18n[nav_lang] %}
   <header class="site-header">
     <div class="wrap">
-      <a class="site-title" href="{{ nav.home_url | relative_url }}">{{ site.title | escape }}</a>
+      <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
       <nav class="site-nav">
-        <a href="{{ nav.home_url | relative_url }}">{{ nav.nav_writing }}</a>
-        <a href="{{ nav.about_url | relative_url }}"{% if nav.about_hreflang %} hreflang="{{ nav.about_hreflang }}"{% endif %}>{{ nav.nav_about }}</a>
+        <a href="{{ '/' | relative_url }}">Writing</a>
+        <a href="{{ '/about/' | relative_url }}">About</a>
         <a href="{{ '/feed.xml' | relative_url }}" title="RSS feed">RSS</a>
-        {% include lang.html part="switch" %}
       </nav>
     </div>
   </header>
@@ -35,14 +31,5 @@
     </div>
   </footer>
   <script data-goatcounter="https://access.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-  <script>
-  /* Remember an explicit language choice (any link marked data-set-lang), so the soft
-     routing in <head> never overrides it. */
-  document.addEventListener("click", function (e) {
-    var a = e.target && e.target.closest ? e.target.closest("a[data-set-lang]") : null;
-    if (!a) return;
-    try { window.localStorage.setItem("access-lang", a.getAttribute("data-set-lang")); } catch (x) {}
-  }, true);
-  </script>
 </body>
 </html>

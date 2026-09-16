@@ -27,7 +27,7 @@ defaults:
   - scope: {path: "", type: posts}
     values: {layout: post}
   - scope: {path: ""}
-    values: {layout: default, image: /assets/img/og/card.png, lang: en}
+    values: {layout: default, image: /assets/img/og/card.png}
 exclude:
   - tools/
   - posts/
