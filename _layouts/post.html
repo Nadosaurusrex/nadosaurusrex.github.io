@@ -18,3 +18,42 @@ layout: default
     </nav>
   </footer>
 </article>
+
+<script>
+  // Reading events for GoatCounter: 50% scrolled, end of post reached,
+  // 30s and 2min of time with the tab visible. Each fires once per page view.
+  (function () {
+    var body = document.querySelector('.post-body');
+    if (!body) return;
+    var path = location.pathname, sent = {};
+
+    function send(name) {
+      if (sent[name]) return;
+      sent[name] = true;
+      (function retry(tries) {
+        if (window.goatcounter && window.goatcounter.count) {
+          window.goatcounter.count({ path: name + ':' + path, title: document.title, event: true });
+        } else if (tries > 0) {
+          setTimeout(function () { retry(tries - 1); }, 500);
+        }
+      })(20);
+    }
+
+    function onScroll() {
+      var rect = body.getBoundingClientRect();
+      var seen = (window.innerHeight - rect.top) / rect.height;
+      if (seen >= 0.5) send('read-50');
+      if (seen >= 1) send('read-end');
+      if (sent['read-50'] && sent['read-end']) window.removeEventListener('scroll', onScroll);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    var seconds = 0;
+    var timer = setInterval(function () {
+      if (document.visibilityState !== 'visible') return;
+      seconds++;
+      if (seconds === 30) send('time-30s');
+      if (seconds === 120) { send('time-2m'); clearInterval(timer); }
+    }, 1000);
+  })();
+</script>
