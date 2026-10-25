@@ -5,6 +5,7 @@ date: 2026-10-25 00:00:00 +0000
 slug: "di-villaggio-in-villaggio"
 source_file: "posts/di-villaggio-in-villaggio.md"
 source_sha: 8e1584f06171ab8e
+lang: it
 ---
 
 [A gennaio ho scritto]({{ site.baseurl }}/p/laccesso-non-il-talento/) che se sai leggere puoi andare avanti. Pensavo che l'AI fosse al servizio dell'umanità e potesse aiutare i deboli. Dopo mesi di studio mi sembra che la frontiera andrà verso la ricerca. E sì, il cancro curato aiuta anche loro, ma le persone indietro restano indietro, perché nessuno ricostruisce il posto dove vivono.
