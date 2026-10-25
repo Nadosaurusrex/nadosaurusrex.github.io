@@ -7,6 +7,12 @@ layout: default
       {%- if page.tags and page.tags.size > 0 %} &middot; {{ page.tags | join: ", " }}{% endif -%}</p>
     <h1 class="post-title">{{ page.title | escape }}</h1>
     {% if page.subtitle %}<p class="post-subtitle">{{ page.subtitle | escape }}</p>{% endif %}
+    {%- if page.ref %}
+    {%- assign versions = site.posts | concat: site.translations | where: "ref", page.ref %}
+    {%- for v in versions %}{% if v.url != page.url %}
+    <p class="post-lang"><a href="{{ v.url | relative_url }}" hreflang="{{ v.lang }}" lang="{{ v.lang }}">{% if v.lang == "it" %}Leggi in italiano{% else %}Read in English{% endif %}</a></p>
+    {%- endif %}{% endfor %}
+    {%- endif %}
   </header>
   <div class="post-body">
     {{ content }}

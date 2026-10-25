@@ -880,7 +880,7 @@ def import_local(force: bool) -> tuple:
                "slug: %s" % yaml_str(slug),
                "source_file: %s" % yaml_str(rel),
                "source_sha: %s" % sha]
-        for k in ("tags", "image", "description"):
+        for k in ("tags", "image", "description", "lang", "ref"):
             if fm_in.get(k):
                 v = str(fm_in[k])
                 fm.append("%s: %s" % (k, v if (k == "tags" and v.startswith("[")) else yaml_str(v)))
