@@ -17,6 +17,9 @@ kramdown:
 permalink: /p/:title/
 timezone: Europe/London
 future: true
+collections:
+  translations:
+    output: true
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
@@ -25,6 +28,8 @@ feed:
   posts_limit: 50
 defaults:
   - scope: {path: "", type: posts}
+    values: {layout: post}
+  - scope: {path: "", type: translations}
     values: {layout: post}
   - scope: {path: ""}
     values: {layout: default, image: /assets/img/og/card.png}
